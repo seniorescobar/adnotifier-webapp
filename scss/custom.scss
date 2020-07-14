@@ -1,0 +1,19 @@
+$primary: #000000;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "targets";
+@import "target";
+@import "notifications";
+
+.container {
+    padding: 0;
+}
+
+.back {
+  color: black;
+}
+
+.back:hover {
+  color: black;
+  text-decoration: none;
+}

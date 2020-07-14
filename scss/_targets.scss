@@ -1,0 +1,56 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+
+  .h1 {
+    margin-bottom: 0;
+  }
+
+  button {
+    padding: 4px 10px;
+  }
+}
+
+.target-search {
+  > .input-group-prepend > #search-addon {
+    background-color: white;
+    border-color: $primary;
+    border-width: 3px;
+    border-right: none;
+  }
+
+  > input {
+    border-color: $primary;
+    border-width: 3px;
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+.target {
+  background-color: $primary;
+  text-align: left;
+
+  .name {
+    color: white;
+  }
+
+  .site {
+    color: yellow;
+  }
+}
+
+.target-add {
+  border-color: $primary;
+  border-style: dashed !important;
+  border-width: 3px;
+
+  span {
+    font-size: 40px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
