@@ -4,7 +4,18 @@ import router from './router'
 import store from './store'
 
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBell, faPlusCircle, faSearch, faArrowLeft, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faBell)
+library.add(faPlusCircle)
+library.add(faMinusCircle)
+library.add(faSearch)
+library.add(faArrowLeft)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 

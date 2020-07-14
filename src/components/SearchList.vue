@@ -1,43 +1,86 @@
 <template>
   <div class="search-list">
-    <b-card-group deck>
-      <b-card
-        v-for="(search, idx) in searches"
-        :key="idx"
-        :title="search.title"
-        img-src="https://picsum.photos/600/300"
-        :img-alt="'Display picture for website' + search.type"
-        img-top
-        tag="article"
-        class="mb-2">
-
-        <b-card-text>
-          Query: <a :href="search.query">{{ search.query }}</a>
-        </b-card-text>
-
-        <b-button variant="primary">Edit</b-button>
-        <b-button variant="danger" class="ml-2">Remove</b-button>
-      </b-card>
-    </b-card-group>
+    <div class="row mb-3">
+      <div class="col">
+        <div class="input-group target-search">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="search-addon">
+              <font-awesome-icon icon="search" />
+            </span>
+          </div>
+          <input type="text" class="form-control" placeholder="Filter targets" aria-label="Search"
+            aria-describedby="search-addon" v-model="searchQuery">
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2" v-for="(search, idx) in searches" :key="idx">
+      <div class="col">
+        <router-link :to="`/view-target/${search.id}`" class="btn btn-block target">
+          <div class="row">
+            <div class="col">
+              <span class="name">{{ search.name }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span class="site">{{ search.type }}</span>
+            </div>
+          </div>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { BCard, BCardText, BButton, BCardGroup } from 'bootstrap-vue'
-import FakeSearches from '../data/fake-searches.js'
+import fakeSearches from '../data/fake-searches.js'
 
 export default {
   name: 'search-list',
-  components: {
-    'b-card': BCard,
-    'b-card-text': BCardText,
-    'b-button': BButton,
-    'b-card-group': BCardGroup
-  },
   data () {
     return {
-      searches: FakeSearches
+      searchQuery: ''
+    }
+  },
+  computed: {
+    searches () {
+      if (this.searchQuery.length > 0) {
+        return fakeSearches.filter(search => search.name.toLowerCase().startsWith(this.searchQuery.toLowerCase()))
+      }
+      return fakeSearches
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.target-search {
+  > .input-group-prepend > #search-addon {
+    background-color: white;
+    border-color: $primary;
+    border-width: 3px;
+    border-right: none;
+  }
+
+  > input {
+    border-color: $primary;
+    border-width: 3px;
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+.target {
+  background-color: $primary;
+  text-align: left;
+
+  .name {
+    color: white;
+  }
+
+  .site {
+    color: yellow;
+  }
+}
+
+</style>

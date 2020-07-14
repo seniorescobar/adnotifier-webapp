@@ -29,6 +29,30 @@ const router = new Router({
       meta: {
         title: 'AdNotifier | Your dashboard'
       }
+    },
+    {
+      path: '/notifications',
+      name: 'notifications',
+      component: () => import('./views/Notifications.vue'),
+      meta: {
+        title: 'AdNotifier | Your notifications'
+      }
+    },
+    {
+      path: '/add-target',
+      name: 'add-target',
+      component: () => import('./views/AddTarget.vue'),
+      meta: {
+        title: 'AdNotifier | Add a target'
+      }
+    },
+    {
+      path: '/view-target/:id',
+      name: 'view-target',
+      component: () => import('./views/ViewTarget.vue'),
+      meta: {
+        title: 'AdNotifier | View target'
+      }
     }
   ]
 })

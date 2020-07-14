@@ -1,40 +1,68 @@
 <template>
   <div class="view-dashboard">
-    <b-container>
-      <b-row>
-        <b-col cols=12>
-          <h1>Dashboard</h1>
-        </b-col>
-      </b-row>
-      <b-row class="mb-2">
-        <b-col cols=12>
-          <h2>Your preferences</h2>
-          <app-user-properties />
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols=12>
-          <h2>Your searches</h2>
-          <app-search-list />
-        </b-col>
-      </b-row>
-    </b-container>
+    <div class="container">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="row pt-5">
+          <div class="col">
+            <div class="bar">
+              <div class="h1">Targets</div>
+              <router-link to="/notifications" class="btn btn-primary rounded-circle">
+                <font-awesome-icon icon="bell" />
+              </router-link>
+            </div>
+          </div>
+        </div>
+        <app-search-list />
+        <div class="row mb-2">
+          <div class="col">
+            <router-link to="add-target" class="btn btn-block text-center target-add">
+              <font-awesome-icon icon="plus-circle" />
+              <span class="fas fa-plus-circle"></span>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { BContainer, BRow, BCol } from 'bootstrap-vue'
 import SearchList from '../components/SearchList'
-import UserProperties from '../components/Forms/UserProperties'
 
 export default {
   name: 'dashboard',
   components: {
-    'b-container': BContainer,
-    'b-row': BRow,
-    'b-col': BCol,
-    'app-search-list': SearchList,
-    'app-user-properties': UserProperties
+    'app-search-list': SearchList
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+
+  .h1 {
+    margin-bottom: 0;
+  }
+
+  button {
+    padding: 4px 10px;
+  }
+}
+
+.target-add {
+  border-color: $primary;
+  border-style: dashed !important;
+  border-width: 3px;
+
+  > * {
+    font-size: 40px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+</style>
