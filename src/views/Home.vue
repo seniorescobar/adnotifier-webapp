@@ -7,7 +7,7 @@
             <div class="col">
               <div class="bar d-flex align-items-center justify-content-between mb-3">
                 <div class="h1 mb-0">Targets</div>
-                <router-link to="/notifications" class="btn btn-lg btn-primary rounded-circle">
+                <router-link to="/notifications" class="btn-notifications btn-primary rounded-circle d-flex align-items-center">
                   <font-awesome-icon icon="bell" />
                 </router-link>
               </div>
@@ -39,6 +39,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-notifications {
+  font-size: 1.25rem;
+  height: 45px;
+  width: 45px;
+
+  > svg {
+    flex: 1;
+  }
+}
+
 .target-add {
   border-style: dashed !important;
   border-width: 3px !important;
