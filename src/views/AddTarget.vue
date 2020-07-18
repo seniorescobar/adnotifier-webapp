@@ -14,7 +14,7 @@
           <form @submit.prevent="addTarget">
             <div class="row mb-2">
               <div class="col">
-                <input class="h1 border-top-0 border-left-0 border-right-0 border-bottom border-primary w-100" placeholder="Name" v-model="name">
+                <input class="h1 border-top-0 border-left-0 border-right-0 border-bottom border-primary rounded-0 w-100" placeholder="Name" v-model="name">
               </div>
             </div>
             <div class="row mb-2">

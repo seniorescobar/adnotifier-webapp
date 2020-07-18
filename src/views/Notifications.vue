@@ -40,7 +40,7 @@
                   <a href="#">
                     <font-awesome-icon class="text-success" icon="plus-circle" @click="addSetting('email', 'test@test.com')"/>
                   </a>
-                  <input class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary ml-1 p-0" placeholder="add">
+                  <input class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary rounded-0 ml-1 p-0" placeholder="add">
                 </div>
               </div>
             </div>
@@ -69,7 +69,7 @@
                   <a href="#">
                     <font-awesome-icon class="text-success" icon="plus-circle" @click="addSetting('sms', '+38631000000')"/>
                   </a>
-                  <input class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary ml-1 p-0" placeholder="add">
+                  <input class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary rounded-0 ml-1 p-0" placeholder="add">
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
                   <a href="#">
                     <font-awesome-icon class="text-success" icon="plus-circle" @click="addSetting('viber', '+38631000001')"/>
                   </a>
-                  <input class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary ml-1 p-0" placeholder="add">
+                  <input class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary rounded-0 ml-1 p-0" placeholder="add">
                 </div>
               </div>
             </div>
