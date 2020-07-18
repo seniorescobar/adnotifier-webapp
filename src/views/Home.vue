@@ -1,23 +1,26 @@
 <template>
-  <div class="view-home">
+  <div class="view-dashboard">
     <div class="container">
-      <div class="alert alert-dark" role="alert">
-        <button @click="loggedIn = !loggedIn" class="btn btn-dark">Debug: Toggle logged in state</button>
-      </div>
-      <div class="row mb-3">
-        <div class="col">
-          <template v-if="loggedIn">
-            <h1>Welcome back, John Doe.</h1>
-            <router-link to="/dashboard" as="button" class="btn btn-primary">
-              Go to your dashboard.
-            </router-link>
-          </template>
-          <template v-else>
-            <h1>Welcome to AdNotifier!</h1>
-            <router-link to="/login" as="button" class="btn btn-primary">
-              Log in!
-            </router-link>
-          </template>
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <div class="row pt-5">
+            <div class="col">
+              <div class="bar d-flex align-items-center justify-content-between mb-3">
+                <div class="h1 mb-0">Targets</div>
+                <router-link to="/notifications" class="btn btn-primary rounded-circle">
+                  <font-awesome-icon icon="bell" />
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <app-search-list />
+          <div class="row mb-2">
+            <div class="col">
+              <router-link to="add-target" class="btn btn-block text-center text-primary border border-primary target-add">
+                <font-awesome-icon icon="plus-circle" />
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -25,12 +28,20 @@
 </template>
 
 <script>
+import SearchList from '../components/SearchList'
+
 export default {
   name: 'home',
-  data () {
-    return {
-      loggedIn: false
-    }
+  components: {
+    'app-search-list': SearchList
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.target-add {
+  border-style: dashed !important;
+  border-width: 3px !important;
+  font-size: 1.75rem;
+}
+</style>

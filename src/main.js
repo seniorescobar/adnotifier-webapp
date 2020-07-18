@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/scss/bootstrap.scss'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBell, faPlusCircle, faSearch, faArrowLeft, faMinusCircle } from '@fortawesome/free-solid-svg-icons'

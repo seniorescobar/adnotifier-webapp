@@ -15,19 +15,11 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/Login.vue'),
+      path: '/signin',
+      name: 'signin',
+      component: () => import('./views/Signin.vue'),
       meta: {
-        title: 'AdNotifier | Login'
-      }
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('./views/Dashboard.vue'),
-      meta: {
-        title: 'AdNotifier | Your dashboard'
+        title: 'AdNotifier | Sign In'
       }
     },
     {
