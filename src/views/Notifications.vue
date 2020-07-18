@@ -3,11 +3,13 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
-          <div class="row mb-1 pt-3">
+          <div class="row">
             <div class="col">
               <router-link to="/" class="back text-primary">
-                <font-awesome-icon icon="arrow-left" />
-                Targets
+                <h5 class="pt-3">
+                  <font-awesome-icon icon="arrow-left" />
+                  Targets
+                </h5>
               </router-link>
             </div>
           </div>
@@ -19,7 +21,7 @@
           <div class="notifications mb-3">
             <div class="row">
               <div class="col">
-                <h5>email</h5>
+                <h2>email</h2>
               </div>
             </div>
             <div class="row" v-for="(email, idx) in settings.email" :key="idx">
@@ -48,7 +50,7 @@
           <div class="notifications mb-3">
             <div class="row">
               <div class="col">
-                <h5>sms</h5>
+                <h2>sms</h2>
               </div>
             </div>
             <div class="row" v-for="(sms, idx) in settings.sms" :key="idx">
@@ -77,7 +79,7 @@
           <div class="notifications mb-3">
             <div class="row">
               <div class="col">
-                <h5>viber</h5>
+                <h2>viber</h2>
               </div>
             </div>
             <div class="row" v-for="(viber, idx) in settings.viber" :key="idx">
@@ -135,6 +137,8 @@ export default {
 <style lang="scss" scoped>
 .notifications {
   .notification {
+    font-size: 1.5rem;
+
     div.options, input.options {
       flex: 1;
     }

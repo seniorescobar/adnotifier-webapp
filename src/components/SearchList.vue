@@ -2,7 +2,7 @@
   <div class="search-list">
     <div class="row mb-3">
       <div class="col">
-        <div class="input-group target-search">
+        <div class="input-group input-group-lg target-search">
           <div class="input-group-prepend">
             <span class="input-group-text bg-white border-right-0 border-primary" id="search-addon">
               <font-awesome-icon icon="search" />
@@ -15,7 +15,7 @@
     </div>
     <div class="row mb-2" v-for="(search, idx) in searches" :key="idx">
       <div class="col">
-        <router-link :to="`/view-target/${search.id}`" class="btn btn-block btn-primary text-left target">
+        <router-link :to="`/view-target/${search.id}`" class="btn btn-block btn-lg btn-primary text-left target">
           <div class="row">
             <div class="col">
               <span class="name">{{ search.name }}</span>

@@ -7,7 +7,7 @@
             <div class="col">
               <div class="bar d-flex align-items-center justify-content-between mb-3">
                 <div class="h1 mb-0">Targets</div>
-                <router-link to="/notifications" class="btn btn-primary rounded-circle">
+                <router-link to="/notifications" class="btn btn-lg btn-primary rounded-circle">
                   <font-awesome-icon icon="bell" />
                 </router-link>
               </div>
@@ -16,7 +16,7 @@
           <app-search-list />
           <div class="row mb-2">
             <div class="col">
-              <router-link to="add-target" class="btn btn-block text-center text-primary border border-primary target-add">
+              <router-link to="add-target" class="btn btn-block btn-lg text-center text-primary border border-primary target-add">
                 <font-awesome-icon icon="plus-circle" />
               </router-link>
             </div>
@@ -42,6 +42,6 @@ export default {
 .target-add {
   border-style: dashed !important;
   border-width: 3px !important;
-  font-size: 1.75rem;
+  font-size: 2.25rem;
 }
 </style>

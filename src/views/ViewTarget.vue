@@ -3,11 +3,13 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
-          <div class="row mb-1 pt-3">
+          <div class="row">
             <div class="col">
               <router-link to="/" class="back text-primary">
-                <font-awesome-icon icon="arrow-left" />
-                Targets
+                <h5 class="pt-3">
+                  <font-awesome-icon icon="arrow-left" />
+                  Targets
+                </h5>
               </router-link>
             </div>
           </div>
@@ -26,7 +28,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <button id="target-delete" class="btn btn-block btn-primary" type="submit">Delete</button>
+                <button id="target-delete" class="btn btn-block btn-lg btn-primary" type="submit">Delete</button>
               </div>
             </div>
           </form>
