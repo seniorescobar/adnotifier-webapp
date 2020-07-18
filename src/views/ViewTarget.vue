@@ -58,6 +58,6 @@ export default {
   max-height: 256px;
   border-width: 3px !important;
   overflow-y: scroll;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 </style>
