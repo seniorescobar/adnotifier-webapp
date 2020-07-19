@@ -2,6 +2,12 @@ $primary: black;
 $warning: yellow;
 $info: blue;
 
+$input-focus-box-shadow: none;
+
+.border-width-3 {
+    border-width: 3px !important;
+}
+
 .back:hover {
     text-decoration: none;
 }

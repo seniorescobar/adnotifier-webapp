@@ -16,12 +16,12 @@
           <form @submit.prevent="addTarget">
             <div class="row mb-2">
               <div class="col">
-                <input class="h1 border-top-0 border-left-0 border-right-0 border-bottom border-primary rounded-0 p-0 w-100" placeholder="Name" v-model="name">
+                <input class="h1 border-top-0 border-left-0 border-right-0 border-bottom border-primary border-width-3 rounded-0 p-0 w-100" placeholder="Name" v-model="name">
               </div>
             </div>
             <div class="row mb-2">
               <div class="col">
-                <textarea class="border border-primary rounded w-100 p-2" name="" id="" cols="30" rows="10" placeholder="Link" v-model="query"></textarea>
+                <textarea class="border border-primary border-width-3 rounded w-100 p-2" name="" id="" cols="30" rows="10" placeholder="Link" v-model="query"></textarea>
               </div>
             </div>
             <div class="row">
@@ -54,12 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input.h1 {
-  border-width: 3px !important;
-}
-
 textarea {
   overflow-y: scroll;
-  border-width: 3px !important;
 }
 </style>

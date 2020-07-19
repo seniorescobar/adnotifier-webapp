@@ -4,7 +4,7 @@
       <div class="col">
         <div class="input-group input-group-lg target-search">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-white border-right-0 border-primary" id="search-addon">
+            <span class="input-group-text bg-white text-primary border-right-0 border-primary" id="search-addon">
               <font-awesome-icon icon="search" />
             </span>
           </div>

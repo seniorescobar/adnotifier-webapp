@@ -21,7 +21,7 @@
             </div>
             <div class="row mb-2">
               <div class="col">
-                <div class="target-link border border-primary rounded p-2">
+                <div class="target-link border border-primary border-width-3 rounded p-2">
                   <a class="text-info" v-bind:href="target.query" target="_blank">{{ target.query }}</a>
                 </div>
               </div>
@@ -58,7 +58,6 @@ export default {
 <style lang="scss" scoped>
 .target-link {
   max-height: 256px;
-  border-width: 3px !important;
   overflow-y: scroll;
   overflow-wrap: break-word;
 }
