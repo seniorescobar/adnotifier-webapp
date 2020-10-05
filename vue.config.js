@@ -1,11 +1,9 @@
-require('path')
-
 module.exports = {
-  css: {
-    loaderOptions: {
-      sass: {
-        prependData: `@import "@/assets/scss/common.scss";`
-      }
+    configureWebpack: {
+        devServer: {
+            watchOptions: {
+                ignored: /node_modules/
+            }
+        }
     }
-  }
 }
