@@ -1,60 +1,81 @@
 <template>
-  <div class="view-dashboard">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-          <div class="row">
-            <div class="col">
-              <router-link to="/" class="back">
-                <h5 class="pt-3">
-                  <font-awesome-icon icon="arrow-left" />
-                  Targets
-                </h5>
-              </router-link>
-            </div>
-          </div>
-          <form @submit.prevent="addTarget">
-            <div class="row mb-2">
-              <div class="col">
-                <input class="h1 border-top-0 border-left-0 border-right-0 border-bottom border-primary border-width-3 rounded-0 p-0 w-100" placeholder="Name" v-model="name">
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="col">
-                <textarea class="border border-primary border-width-3 rounded w-100 p-2" name="" id="" cols="30" rows="10" placeholder="Link" v-model="query"></textarea>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <button id="target-add" class="btn btn-block btn-lg btn-primary" type="submit">Add</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+  <div class="row">
+    <div class="col">
+      <back-button name="targets" text="Targets"></back-button>
     </div>
   </div>
+  <form @submit.prevent="addTarget">
+    <div class="row mb-2">
+      <div class="col">
+        <input
+          type="text"
+          class="h1 border-top-0 border-left-0 border-right-0 border-primary border-width-3 rounded-0 p-0 w-100"
+          placeholder="Title"
+          required
+          autofocus
+          ref="title"
+        />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <textarea
+          cols="30"
+          rows="10"
+          placeholder="Link"
+          class="border-primary border-width-3 w-100 p-2"
+          required
+          ref="url"
+        ></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button type="submit" class="btn btn-block btn-lg btn-primary">
+          Add
+        </button>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script>
+import BackButton from "../components/BackButton.vue";
+
 export default {
-  name: 'add-target',
-  data () {
-    return {
-      name: '',
-      query: ''
-    }
+  components: {
+    BackButton,
   },
   methods: {
-    addTarget () {
-      console.log('Saving new target:', this.name, this.query)
-    }
-  }
-}
+    addTarget() {
+      fetch(
+        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: this.$refs.title.value,
+            url: this.$refs.url.value,
+          }),
+        }
+      )
+        .then((response) => response.json())
+        .then((newTarget) => {
+          this.$store.dispatch("addTarget", {
+            id: newTarget.targetID,
+            site: newTarget.site,
+            title: newTarget.title,
+            url: newTarget.url,
+          });
+
+          this.$router.push({ name: "targets" });
+        });
+    },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-textarea {
-  overflow-y: scroll;
-}
+<style lang="scss">
 </style>

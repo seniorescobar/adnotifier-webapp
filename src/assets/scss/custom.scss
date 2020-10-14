@@ -1,0 +1,13 @@
+// $primary: #f2ece4;
+$primary: #1B1B1B;
+$warning: yellow;
+$info: blue;
+
+$input-focus-box-shadow: none;
+$input-btn-focus-box-shadow: none;
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+.border-width-3 {
+  border-width: 3px !important;
+}

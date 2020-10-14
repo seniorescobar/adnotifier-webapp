@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-adnotifierwebapp-dev-125821-authRole",
+      "UnauthRoleArn": "arn:aws:iam::347795282274:role/amplify-adnotifierwebapp-dev-125821-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::347795282274:role/amplify-adnotifierwebapp-dev-125821-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-adnotifierwebapp-dev-125821-deployment",
+      "UnauthRoleName": "amplify-adnotifierwebapp-dev-125821-unauthRole",
+      "StackName": "amplify-adnotifierwebapp-dev-125821",
+      "StackId": "arn:aws:cloudformation:eu-central-1:347795282274:stack/amplify-adnotifierwebapp-dev-125821/844e28d0-0ae7-11eb-af03-0abaa2279058",
+      "AmplifyAppId": "d3v2j5ppzq4sk8"
+    },
+    "categories": {
+      "auth": {
+        "adnotifierwebapp6fbf7caa": {}
+      }
+    }
+  }
+}

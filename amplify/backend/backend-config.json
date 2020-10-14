@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "adnotifierwebapp6fbf7caa": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

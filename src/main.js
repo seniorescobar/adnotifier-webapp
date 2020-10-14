@@ -1,26 +1,64 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from 'vue'
+import { createStore } from 'vuex'
 
-import 'bootstrap/scss/bootstrap.scss'
+import App from './App.vue'
+import router from './router.js'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBell, faPlusCircle, faSearch, faArrowLeft, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faPlusCircle, faArrowLeft, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faBell)
-library.add(faPlusCircle)
-library.add(faMinusCircle)
-library.add(faSearch)
-library.add(faArrowLeft)
+library.add(faSearch, faPlusCircle, faMinusCircle, faArrowLeft)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+import 'bootstrap'
+import './assets/scss/custom.scss'
 
-Vue.config.productionTip = false
+const app = createApp(App)
+const store = createStore({
+    state() {
+        return {
+            targets: []
+        }
+    },
+    getters: {
+        getTargets: (state) => {
+            return state.targets
+        },
+        getTarget: (_, getters) => (id) => {
+            return getters.getTargets.find(
+                (target) => target.id === id
+            );
+        }
+    },
+    mutations: {
+        addTarget(state, target) {
+            state.targets.unshift(target)
+        },
+        setTargets(state, targets) {
+            state.targets = targets
+        },
+        deleteTarget(state, id) {
+            state.targets = state.targets.filter(
+                (target) => target.id !== id
+            );
+        }
+    },
+    actions: {
+        addTarget({commit}, target) {
+            commit('addTarget', target)
+        },
+        setTargets({commit}, targets) {
+            commit('setTargets', targets)
+        },
+        deleteTarget({commit}, id) {
+            commit('deleteTarget', id)
+        }
+    }
+})
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+app.use(router)
+app.use(store)
+
+app.component('font-awesome-icon', FontAwesomeIcon)
+
+app.mount('#app')

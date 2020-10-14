@@ -1,58 +1,62 @@
 <template>
-  <div class="view-dashboard">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-          <div class="row">
-            <div class="col">
-              <router-link to="/" class="back text-primary">
-                <h5 class="pt-3">
-                  <font-awesome-icon icon="arrow-left" />
-                  Targets
-                </h5>
-              </router-link>
-            </div>
-          </div>
-          <form @submit.prevent="deleteTarget">
-            <div class="row mb-2">
-              <div class="col">
-                <div class="h1">{{ target.name ? target.name : 'N/A' }}</div>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="col">
-                <div class="target-link border border-primary border-width-3 rounded p-2">
-                  <a class="text-info" v-bind:href="target.query" target="_blank">{{ target.query }}</a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <button id="target-delete" class="btn btn-block btn-lg btn-primary" type="submit">Delete</button>
-              </div>
-            </div>
-          </form>
-        </div>
+  <div class="row">
+    <div class="col">
+      <back-button name="targets" text="Targets"></back-button>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <h1>{{ target.title }}</h1>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <div class="target-link border border-primary border-width-3 rounded p-2">
+        <a :href="target.url" class="text-primary" target="_blank">{{ target.url }}</a>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-block btn-lg btn-danger" @click="deleteTarget">
+        Delete
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import searches from '../data/fake-searches'
+import BackButton from "../components/BackButton.vue";
+
 export default {
-  name: 'view-target',
+  components: {
+    BackButton,
+  },
   computed: {
-    target () {
-      return searches.find(search => search.id === parseInt(this.$route.params.id))
-    }
+    target() {
+      return this.$store.getters.getTarget(this.$route.params.id);
+    },
   },
   methods: {
-    deleteTarget () {
-      console.log('Deleting target')
-    }
-  }
-}
+    deleteTarget() {
+      fetch(
+        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target/" +
+          this.target.id,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then(() => {
+          this.$router.push({ name: "targets" });
+          this.$store.dispatch("deleteTarget", this.target.id);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
