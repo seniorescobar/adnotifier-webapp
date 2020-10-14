@@ -12,7 +12,7 @@
   <div class="row mb-2">
     <div class="col">
       <div class="target-link border border-primary border-width-3 rounded p-2">
-        <a :href="target.url" class="text-primary" target="_blank">{{ target.url }}</a>
+        <a :href="target.url" class="text-info" target="_blank">{{ target.url }}</a>
       </div>
     </div>
   </div>
