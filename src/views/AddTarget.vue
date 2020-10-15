@@ -29,14 +29,21 @@
         ></textarea>
       </div>
     </div>
-    <div class="row">
+    <div class="row mb-2">
       <div class="col">
         <button type="submit" class="btn btn-block btn-lg btn-primary">
-          Add
+          {{ adding ? "Adding..." : "Add" }}
         </button>
       </div>
     </div>
   </form>
+  <div class="row" v-if="error">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,8 +53,16 @@ export default {
   components: {
     BackButton,
   },
+  data() {
+    return {
+      adding: false,
+      error: null,
+    };
+  },
   methods: {
     addTarget() {
+      this.adding = true;
+
       fetch(
         "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target",
         {
@@ -61,7 +76,15 @@ export default {
           }),
         }
       )
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            var err = new Error();
+            err.response = response;
+            throw err;
+          }
+
+          return response.json();
+        })
         .then((newTarget) => {
           this.$store.dispatch("addTarget", {
             id: newTarget.targetID,
@@ -71,6 +94,13 @@ export default {
           });
 
           this.$router.push({ name: "targets" });
+        })
+        .catch((error) => {
+          this.adding = false;
+
+          error.response.json().then((error) => {
+            this.error = error.text;
+          });
         });
     },
   },
