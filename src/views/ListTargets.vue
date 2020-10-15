@@ -14,8 +14,13 @@
           >
             aleksandar
           </button>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-            <router-link class="dropdown-item" :to="{ name: 'settings' }">Settings</router-link>
+          <div
+            class="dropdown-menu dropdown-menu-right"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <router-link class="dropdown-item" :to="{ name: 'settings' }"
+              >Settings</router-link
+            >
             <a class="dropdown-item" href="#">Log out</a>
           </div>
         </div>
@@ -55,7 +60,7 @@
         :to="{ name: 'add-target' }"
         class="target-add btn btn-block btn-lg text-center text-primary border-primary border-width-3"
       >
-        <font-awesome-icon icon="plus-circle"/>
+        <font-awesome-icon icon="plus-circle" />
       </router-link>
     </div>
   </div>
@@ -64,15 +69,26 @@
 <script>
 import TargetCard from "../components/target/TargetCard.vue";
 
+function fetchTargets(callback) {
+  fetch("https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target")
+    .then((response) => response.json())
+    .then(callback);
+}
+
 export default {
   components: {
     TargetCard,
   },
-  computed: {
-    targets() {
-      return this.$store.getters.getTargets;
-    },
-  }
+  data() {
+    return {
+      targets: null
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    fetchTargets((targets) => {
+      next((vm) => vm.targets = targets)
+    })
+  },
 };
 </script>
 

@@ -41,6 +41,23 @@
 <script>
 import BackButton from "../components/BackButton.vue";
 
+function fetchTarget(id, callback) {
+  fetch(
+    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target/" +
+      id,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      callback(data);
+    });
+}
+
 export default {
   components: {
     BackButton,
@@ -50,18 +67,21 @@ export default {
       target: null,
     };
   },
-  created() {
-    this.loadTarget(this.$route);
+  beforeRouteEnter(to, from, next) {
+    fetchTarget(to.params.id, (target) => {
+      next((vm) => {
+        vm.target = target;
+      });
+    });
   },
-  watch: {
-    $route(newRoute) {
-      this.loadTarget(newRoute);
-    },
+  beforeRouteUpdate(to, from, next) {
+    fetchTarget(to.params.id, (target) => {
+      next((vm) => {
+        vm.target = target;
+      });
+    });
   },
   methods: {
-    loadTarget(route) {
-      this.target = this.$store.getters.getTarget(route.params.id);
-    },
     deleteTarget() {
       fetch(
         "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target/" +
@@ -75,7 +95,6 @@ export default {
       )
         .then((response) => response.json())
         .then(() => {
-          this.$store.dispatch("deleteTarget", this.target.id);
           this.$router.push({ name: "targets" });
         });
     },

@@ -85,14 +85,7 @@ export default {
 
           return response.json();
         })
-        .then((newTarget) => {
-          this.$store.dispatch("addTarget", {
-            id: newTarget.targetID,
-            site: newTarget.site,
-            title: newTarget.title,
-            url: newTarget.url,
-          });
-
+        .then(() => {
           this.$router.push({ name: "targets" });
         })
         .catch((error) => {
