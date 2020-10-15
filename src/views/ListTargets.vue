@@ -49,9 +49,7 @@
   <target-card
     v-for="target in targets"
     :key="target.id"
-    :id="target.id"
-    :title="target.title"
-    :site="target.site"
+    :target="target"
   ></target-card>
 
   <div class="row mb-2">
