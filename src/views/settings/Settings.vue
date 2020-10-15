@@ -95,6 +95,14 @@
 <script>
 import BackButton from "../../components/BackButton.vue";
 
+function fetchNotifications(callback) {
+  fetch(
+    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/notification"
+  )
+    .then((resp) => resp.json())
+    .then(callback);
+}
+
 export default {
   components: {
     BackButton,
@@ -170,12 +178,12 @@ export default {
         });
     },
   },
-  created() {
-    fetch(
-      "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/notification"
-    )
-      .then((resp) => resp.json())
-      .then((json) => (this.notifications = json));
+  beforeRouteEnter(to, from, next) {
+    fetchNotifications((data) => {
+      next((vm) => {
+        vm.notifications = data;
+      });
+    });
   },
 };
 </script>
