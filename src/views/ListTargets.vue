@@ -107,8 +107,4 @@ export default {
   border-style: dashed !important;
   font-size: 2.25rem;
 }
-
-.border-width-3 {
-  border-width: 3px !important;
-}
 </style>
