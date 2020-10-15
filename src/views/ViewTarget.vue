@@ -28,7 +28,24 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row mb-2">
+      <div class="col">
+        <template v-if="target.enabled">
+          <!-- <div class="alert alert-success mb-2">
+            This target is enabled. You'll be notified as soon as something new
+            pops up!
+          </div> -->
+          <button class="btn btn-block btn-sm btn-secondary">Disable</button>
+        </template>
+        <template v-else>
+          <!-- <div class="alert alert-warning mb-2">
+            This target is disabled. We won't send you any notifications about new items.
+          </div> -->
+          <button class="btn btn-block btn-sm btn-secondary">Enable</button>
+        </template>
+      </div>
+    </div>
+    <div class="row mb-2">
       <div class="col">
         <button class="btn btn-block btn-lg btn-danger" @click="deleteTarget">
           Delete
