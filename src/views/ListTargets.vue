@@ -72,7 +72,7 @@ export default {
     targets() {
       return this.$store.getters.getTargets;
     },
-  },
+  }
 };
 </script>
 
