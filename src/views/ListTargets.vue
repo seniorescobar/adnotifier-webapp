@@ -79,13 +79,22 @@ export default {
   },
   data() {
     return {
-      targets: null
-    }
+      targets: null,
+    };
   },
   beforeRouteEnter(to, from, next) {
     fetchTargets((targets) => {
-      next((vm) => vm.targets = targets)
-    })
+      next((vm) => {
+        vm.targets = targets.sort((a, b) => {
+          if (a.timestamp > b.timestamp) {
+            return -1;
+          } else if (b.timestamp > a.timestamp) {
+            return 1;
+          }
+          return 0;
+        });
+      });
+    });
   },
 };
 </script>
