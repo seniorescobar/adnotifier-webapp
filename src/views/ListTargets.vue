@@ -1,8 +1,8 @@
 <template>
   <div class="row pt-5">
     <div class="col">
-      <div class="bar d-flex align-items-center justify-content-between mb-3">
-        <div class="h1 mb-0">Targets</div>
+      <div class="bar d-flex align-items-center justify-content-end justify-content-sm-between mb-3">
+        <div class="h1 mb-0 d-none d-sm-block">Targets</div>
         <div class="dropdown">
           <button
             class="btn dropdown-toggle"
