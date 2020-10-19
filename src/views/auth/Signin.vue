@@ -39,6 +39,13 @@
                   </button>
                 </div>
               </div>
+              <div v-if="error" class="row mb-2">
+                <div class="col">
+                  <div class="alert alert-danger mb-0">
+                    Sorry, your email or password was incorrect.
+                  </div>
+                </div>
+              </div>
               <div class="row text-center">
                 <div class="col">
                   <a href="#">Forgot Password?</a>
@@ -85,6 +92,7 @@
 
 <script>
 import { Auth } from "aws-amplify";
+
 import PasswordInput from "../../components/PasswordInput.vue";
 
 export default {
@@ -96,6 +104,7 @@ export default {
       signingIn: false,
       showCompleteSignin: false,
       user: null,
+      error: false,
     };
   },
   methods: {
@@ -105,15 +114,20 @@ export default {
       const email = this.$refs.email.value;
       const password = this.$refs.password.value;
 
-      const user = await Auth.signIn(email, password);
-      if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
-        this.showCompleteSignin = true;
-        this.user = user;
+      try {
+        const user = await Auth.signIn(email, password);
+        if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
+          this.showCompleteSignin = true;
+          this.user = user;
 
-        return;
+          return;
+        }
+
+        this.redirect();
+      } catch (e) {
+        this.signingIn = false;
+        this.error = true;
       }
-
-      this.redirect();
     },
     async completeSignin() {
       const newPassword = this.$refs.newPassword.$refs.password.value;
