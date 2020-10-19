@@ -55,37 +55,7 @@
           </div>
         </div>
       </template>
-      <template v-else>
-        <div class="row mt-5">
-          <div class="col">
-            <p class="mb-2">Please enter a new password.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <form @submit.prevent="completeSignin">
-              <div class="row mb-2">
-                <div class="col">
-                  <password-input
-                    placeholder="New password"
-                    ref="newPassword"
-                  ></password-input>
-                </div>
-              </div>
-              <div class="row mb-2">
-                <div class="col">
-                  <button
-                    type="submit"
-                    class="btn btn-block btn-lg btn-primary"
-                  >
-                    Confirm
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </template>
+      <complete-signin v-if="showCompleteSignin" :user="user"></complete-signin>
     </div>
   </div>
 </template>
@@ -93,11 +63,11 @@
 <script>
 import { Auth } from "aws-amplify";
 
-import PasswordInput from "../../components/PasswordInput.vue";
+import CompleteSignin from './CompleteSignin.vue'
 
 export default {
   components: {
-    PasswordInput,
+    CompleteSignin
   },
   data() {
     return {
@@ -117,28 +87,19 @@ export default {
       try {
         const user = await Auth.signIn(email, password);
         if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
-          this.showCompleteSignin = true;
           this.user = user;
+          this.showCompleteSignin = true;
 
           return;
         }
 
-        this.redirect();
+        this.$router.replace({
+          name: "targets",
+        });
       } catch (e) {
         this.signingIn = false;
         this.error = true;
       }
-    },
-    async completeSignin() {
-      const newPassword = this.$refs.newPassword.$refs.password.value;
-      await Auth.completeNewPassword(this.user, newPassword);
-
-      this.redirect();
-    },
-    redirect() {
-      this.$router.replace({
-        name: "targets",
-      });
     },
   },
 };
