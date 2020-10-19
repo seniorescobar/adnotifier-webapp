@@ -39,16 +39,22 @@
 </template>
 
 <script>
+import { Auth } from "aws-amplify";
+
 import BackButton from "../components/BackButton.vue";
 
-function fetchTarget(id, callback) {
+async function fetchTarget(id, callback) {
+  const sess = await Auth.currentSession();
+  const token = sess.getIdToken().getJwtToken();
+
   fetch(
-    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target/" +
+    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target/" +
       id,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
     }
   )
@@ -82,14 +88,18 @@ export default {
     });
   },
   methods: {
-    deleteTarget() {
+    async deleteTarget() {
+      const sess = await Auth.currentSession();
+      const token = sess.getIdToken().getJwtToken();
+
       fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target/" +
+        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target/" +
           this.target.id,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
         }
       )

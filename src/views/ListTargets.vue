@@ -12,7 +12,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            aleksandar
+            {{ user.email }}
           </button>
           <div
             class="dropdown-menu dropdown-menu-right"
@@ -21,7 +21,9 @@
             <router-link class="dropdown-item" :to="{ name: 'settings' }"
               >Settings</router-link
             >
-            <a class="dropdown-item" href="#">Log out</a>
+            <router-link class="dropdown-item" :to="{ name: 'signout' }"
+              >Sign out</router-link
+            >
           </div>
         </div>
       </div>
@@ -65,10 +67,22 @@
 </template>
 
 <script>
+import { Auth } from "aws-amplify";
+
 import TargetCard from "../components/target/TargetCard.vue";
 
-function fetchTargets(callback) {
-  fetch("https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target")
+async function fetchTargets(callback) {
+  const sess = await Auth.currentSession();
+  const token = sess.getIdToken().getJwtToken();
+
+  fetch(
+    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target",
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  )
     .then((response) => response.json())
     .then(callback);
 }
@@ -79,6 +93,9 @@ export default {
   },
   data() {
     return {
+      user: {
+        email: "",
+      },
       targets: null,
     };
   },
@@ -95,6 +112,12 @@ export default {
         });
       });
     });
+  },
+  async created() {
+    const user = await Auth.currentAuthenticatedUser();
+    this.user = {
+      email: user.attributes.email,
+    };
   },
 };
 </script>

@@ -93,11 +93,21 @@
 </template>
 
 <script>
+import { Auth } from "aws-amplify";
+
 import BackButton from "../../components/BackButton.vue";
 
-function fetchNotifications(callback) {
+async function fetchNotifications(callback) {
+  const sess = await Auth.currentSession();
+  const token = sess.getIdToken().getJwtToken();
+
   fetch(
-    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/notification"
+    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification",
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
   )
     .then((resp) => resp.json())
     .then(callback);
@@ -124,7 +134,7 @@ export default {
     formatPhoneNumber(num) {
       return num.replace(/^00/g, "+");
     },
-    addNotification(type, event) {
+    async addNotification(type, event) {
       let options = {};
       switch (type) {
         case "email":
@@ -135,12 +145,16 @@ export default {
           break;
       }
 
+      const sess = await Auth.currentSession();
+      const token = sess.getIdToken().getJwtToken();
+
       fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/notification",
+        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
           body: JSON.stringify({
             type: type,
@@ -159,14 +173,18 @@ export default {
           event.target.reset();
         });
     },
-    deleteNotification(id) {
+    async deleteNotification(id) {
+      const sess = await Auth.currentSession();
+      const token = sess.getIdToken().getJwtToken();
+
       fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/notification/" +
+        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification/" +
           id,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
         }
       )

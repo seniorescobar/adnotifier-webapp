@@ -31,7 +31,13 @@
     </div>
     <div class="form-group mb-2">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="enabled" ref="enabled" checked />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="enabled"
+          ref="enabled"
+          checked
+        />
         <label class="form-check-label" for="enabled">Enable target</label>
       </div>
     </div>
@@ -53,6 +59,8 @@
 </template>
 
 <script>
+import { Auth } from "aws-amplify";
+
 import BackButton from "../components/BackButton.vue";
 
 export default {
@@ -66,15 +74,19 @@ export default {
     };
   },
   methods: {
-    addTarget() {
+    async addTarget() {
       this.adding = true;
 
+      const sess = await Auth.currentSession();
+      const token = sess.getIdToken().getJwtToken();
+
       fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/prod/target",
+        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
           body: JSON.stringify({
             title: this.$refs.title.value,
