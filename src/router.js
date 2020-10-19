@@ -75,6 +75,7 @@ router.beforeEach(async (to, from, next) => {
                     redirect: to.fullPath
                 }
             });
+            return;
         }
     }
     next();
