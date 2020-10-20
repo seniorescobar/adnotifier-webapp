@@ -17,13 +17,13 @@
     </div>
     <div class="row mb-2">
       <div class="col">
-        <div
-          class="target-link border border-primary border-width-3 rounded p-2"
+        <a
+          :href="target.url"
+          class="btn btn-block btn-sm btn-secondary"
+          target="_blank"
         >
-          <a :href="target.url" class="text-info" target="_blank">{{
-            target.url
-          }}</a>
-        </div>
+          Open link in new tab
+        </a>
       </div>
     </div>
     <div class="row">
@@ -103,11 +103,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.target-link {
-  max-height: 256px;
-  overflow-y: scroll;
-  overflow-wrap: break-word;
-}
-</style>
