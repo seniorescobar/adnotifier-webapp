@@ -5,9 +5,14 @@
     </div>
   </div>
   <template v-if="target">
-    <div class="row mb-2">
+    <div class="row">
       <div class="col">
-        <h1>{{ target.title }}</h1>
+        <h1 class="mb-0">{{ target.title }}</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p class="text-secondary">Added: {{ target.timestamp }}</p>
       </div>
     </div>
     <div class="row mb-2">
