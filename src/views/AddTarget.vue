@@ -22,23 +22,11 @@
         <textarea
           cols="30"
           rows="10"
-          placeholder="Link"
+          placeholder="URL"
           class="border-primary border-width-3 w-100 p-2"
           required
           ref="url"
         ></textarea>
-      </div>
-    </div>
-    <div class="form-group mb-2">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          id="enabled"
-          ref="enabled"
-          checked
-        />
-        <label class="form-check-label" for="enabled">Enable target</label>
       </div>
     </div>
     <div class="row mb-2">
@@ -91,7 +79,7 @@ export default {
           body: JSON.stringify({
             title: this.$refs.title.value,
             url: this.$refs.url.value,
-            enabled: this.$refs.enabled.checked,
+            enabled: true,
           }),
         }
       )

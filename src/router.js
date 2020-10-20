@@ -15,6 +15,7 @@ const router = createRouter({
             path: '/',
             component: ListTargets,
             meta: {
+                title: 'kupi.link | targets',
                 requiresAuth: true,
             },
         },
@@ -23,6 +24,7 @@ const router = createRouter({
             path: '/target/add',
             component: AddTarget,
             meta: {
+                title: 'kupi.link | add target',
                 requiresAuth: true,
             },
         },
@@ -31,6 +33,7 @@ const router = createRouter({
             path: '/target/:id',
             component: ViewTarget,
             meta: {
+                title: 'kupi.link | view target',
                 requiresAuth: true,
             },
         },
@@ -39,6 +42,7 @@ const router = createRouter({
             path: '/settings',
             component: Settings,
             meta: {
+                title: 'kupi.link | settings',
                 requiresAuth: true,
             },
         },
@@ -47,6 +51,7 @@ const router = createRouter({
             path: '/signin',
             component: Signin,
             meta: {
+                title: 'kupi.link | signin',
                 requiresAuth: false,
             },
         },
@@ -55,6 +60,7 @@ const router = createRouter({
             path: '/signout',
             component: Signout,
             meta: {
+                title: 'kupi.link | signout',
                 requiresAuth: true,
             },
         },
@@ -63,6 +69,8 @@ const router = createRouter({
 
 import { Auth } from "aws-amplify";
 router.beforeEach(async (to, from, next) => {
+    document.title = to.meta.title
+
     if (to.matched.some(record => record.meta.requiresAuth)) {
         try {
             await Auth.currentAuthenticatedUser();

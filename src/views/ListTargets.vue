@@ -1,8 +1,18 @@
 <template>
   <div class="row pt-5">
     <div class="col">
-      <div class="bar d-flex align-items-center justify-content-between mb-3">
-        <div class="h1 mb-0">Targets</div>
+      <div
+        class="bar d-flex align-items-center justify-content-end justify-content-sm-between mb-3"
+      >
+        <div class="d-flex align-items-center">
+          <div class="h1 mb-0 d-none d-sm-block">Targets</div>
+          <span
+            v-if="loading"
+            class="spinner-grow spinner-grow-sm ml-3"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </div>
         <div class="dropdown">
           <button
             class="btn dropdown-toggle"
@@ -12,7 +22,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {{ user.email }}
+            {{ email }}
           </button>
           <div
             class="dropdown-menu dropdown-menu-right"
@@ -43,16 +53,25 @@
           type="text"
           class="form-control border-left-0 border-primary border-width-3 pl-0"
           placeholder="Search"
+          v-model="query"
         />
       </div>
     </div>
   </div>
 
   <target-card
-    v-for="target in targets"
+    v-for="target in filteredTargets"
     :key="target.id"
     :target="target"
   ></target-card>
+
+  <div v-if="!loading && !filteredTargets.length" class="row mb-2">
+    <div class="col">
+      <div class="alert alert-secondary mb-0">
+        Hmmm... it looks like the list of targets is empty.
+      </div>
+    </div>
+  </div>
 
   <div class="row mb-2">
     <div class="col">
@@ -71,20 +90,18 @@ import { Auth } from "aws-amplify";
 
 import TargetCard from "../components/target/TargetCard.vue";
 
-async function fetchTargets(callback) {
+async function fetchTargets() {
   const sess = await Auth.currentSession();
   const token = sess.getIdToken().getJwtToken();
 
-  fetch(
+  return fetch(
     "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target",
     {
       headers: {
         Authorization: token,
       },
     }
-  )
-    .then((response) => response.json())
-    .then(callback);
+  ).then((r) => r.json());
 }
 
 export default {
@@ -93,46 +110,56 @@ export default {
   },
   data() {
     return {
-      user: {
-        email: "",
-      },
-      targets: null,
+      loading: false,
+      email: "",
+      targets: [],
+      query: "",
     };
   },
-  beforeRouteEnter(to, from, next) {
-    fetchTargets((targets) => {
-      next((vm) => {
-        vm.targets = targets.sort((a, b) => {
-          if (a.timestamp > b.timestamp) {
-            return -1;
-          } else if (b.timestamp > a.timestamp) {
-            return 1;
-          }
-          return 0;
-        });
+  computed: {
+    filteredTargets() {
+      if (this.query.length > 0) {
+        return this.targets.filter((search) =>
+          search.title.toLowerCase().includes(this.query.toLowerCase())
+        );
+      }
+
+      return this.targets;
+    },
+  },
+  methods: {
+    async loadTargets() {
+      this.loading = true;
+
+      const targets = await fetchTargets();
+      this.targets = this.sortByTimestamp(targets);
+
+      this.loading = false;
+    },
+    sortByTimestamp(data) {
+      return data.sort((a, b) => {
+        if (a.timestamp > b.timestamp) {
+          return -1;
+        } else if (b.timestamp > a.timestamp) {
+          return 1;
+        }
+        return 0;
       });
-    });
+    },
   },
   async created() {
     const user = await Auth.currentAuthenticatedUser();
-    this.user = {
-      email: user.attributes.email,
-    };
+    this.email = user.attributes.email;
+
+    this.loadTargets();
+  },
+  watch: {
+    $route: "loadTargets",
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.btn-notifications {
-  font-size: 1.25rem;
-  height: 45px;
-  width: 45px;
-
-  > svg {
-    flex: 1;
-  }
-}
-
 .target-add {
   border-style: dashed !important;
   font-size: 2.25rem;

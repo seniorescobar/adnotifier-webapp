@@ -48,48 +48,6 @@
       </div>
     </div>
   </div>
-  <div class="notification-group mb-3">
-    <div class="row">
-      <div class="col">
-        <h2>sms</h2>
-      </div>
-    </div>
-    <div class="row" v-for="sms in smses" :key="sms.id">
-      <div class="col">
-        <div class="notification d-flex mb-1">
-          <button
-            @click="deleteNotification(sms.id)"
-            class="p-0 border-0 bg-transparent"
-          >
-            <font-awesome-icon class="text-danger" icon="minus-circle" />
-          </button>
-          <div class="options ml-1">
-            {{ formatPhoneNumber(sms.options.phoneNumber) }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <form
-          @submit.prevent="addNotification('sms', $event)"
-          class="notification d-flex mb-1"
-        >
-          <button type="submit" class="p-0 border-0 bg-transparent">
-            <font-awesome-icon class="text-success" icon="plus-circle" />
-          </button>
-          <input
-            type="tel"
-            class="options border-top-0 border-left-0 border-right-0 border-bottom border-primary rounded-0 ml-1 p-0"
-            placeholder="e.g. +38600000000"
-            required
-            pattern="\+386\d{8}"
-            ref="smsPhoneNumber"
-          />
-        </form>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -126,25 +84,9 @@ export default {
     emails() {
       return this.notifications.filter((n) => n.type === "email");
     },
-    smses() {
-      return this.notifications.filter((n) => n.type === "sms");
-    },
   },
   methods: {
-    formatPhoneNumber(num) {
-      return num.replace(/^00/g, "+");
-    },
     async addNotification(type, event) {
-      let options = {};
-      switch (type) {
-        case "email":
-          options = { to: this.$refs.emailTo.value };
-          break;
-        case "sms":
-          options = { phoneNumber: this.$refs.smsPhoneNumber.value };
-          break;
-      }
-
       const sess = await Auth.currentSession();
       const token = sess.getIdToken().getJwtToken();
 
@@ -158,7 +100,7 @@ export default {
           },
           body: JSON.stringify({
             type: type,
-            options: options,
+            options: { to: this.$refs.emailTo.value },
           }),
         }
       )

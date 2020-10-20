@@ -4,28 +4,26 @@
       <back-button name="targets" text="Targets"></back-button>
     </div>
   </div>
-  <div class="row mt-2" v-if="!target">
-    <div class="col">
-      <div class="alert alert-danger" role="alert">
-        Oops, we couldn't find this target...
+  <template v-if="target">
+    <div class="row">
+      <div class="col">
+        <h1 class="mb-0">{{ target.title }}</h1>
       </div>
     </div>
-  </div>
-  <template v-else>
-    <div class="row mb-2">
+    <div class="row">
       <div class="col">
-        <h1>{{ target.title }}</h1>
+        <p class="text-secondary">Added: {{ target.timestamp }}</p>
       </div>
     </div>
     <div class="row mb-2">
       <div class="col">
-        <div
-          class="target-link border border-primary border-width-3 rounded p-2"
+        <a
+          :href="target.url"
+          class="btn btn-block btn-secondary"
+          target="_blank"
         >
-          <a :href="target.url" class="text-info" target="_blank">{{
-            target.url
-          }}</a>
-        </div>
+          Open link in new tab
+        </a>
       </div>
     </div>
     <div class="row">
@@ -43,11 +41,11 @@ import { Auth } from "aws-amplify";
 
 import BackButton from "../components/BackButton.vue";
 
-async function fetchTarget(id, callback) {
+async function fetchTarget(id) {
   const sess = await Auth.currentSession();
   const token = sess.getIdToken().getJwtToken();
 
-  fetch(
+  return fetch(
     "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target/" +
       id,
     {
@@ -57,11 +55,7 @@ async function fetchTarget(id, callback) {
         Authorization: token,
       },
     }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      callback(data);
-    });
+  ).then((r) => r.json());
 }
 
 export default {
@@ -73,18 +67,16 @@ export default {
       target: null,
     };
   },
-  beforeRouteEnter(to, from, next) {
-    fetchTarget(to.params.id, (target) => {
-      next((vm) => {
-        vm.target = target;
-      });
+  async beforeRouteEnter(to, from, next) {
+    const target = await fetchTarget(to.params.id);
+    next((vm) => {
+      vm.target = target;
     });
   },
-  beforeRouteUpdate(to, from, next) {
-    fetchTarget(to.params.id, (target) => {
-      next((vm) => {
-        vm.target = target;
-      });
+  async beforeRouteUpdate(to, from, next) {
+    const target = await fetchTarget(to.params.id);
+    next((vm) => {
+      vm.target = target;
     });
   },
   methods: {
@@ -111,11 +103,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.target-link {
-  max-height: 256px;
-  overflow-y: scroll;
-  overflow-wrap: break-word;
-}
-</style>
