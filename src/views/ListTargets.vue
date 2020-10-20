@@ -53,18 +53,19 @@
           type="text"
           class="form-control border-left-0 border-primary border-width-3 pl-0"
           placeholder="Search"
+          v-model="query"
         />
       </div>
     </div>
   </div>
 
   <target-card
-    v-for="target in targets"
+    v-for="target in filteredTargets"
     :key="target.id"
     :target="target"
   ></target-card>
 
-  <div v-if="!loading && !targets.length" class="row mb-2">
+  <div v-if="!loading && !filteredTargets.length" class="row mb-2">
     <div class="col">
       <div class="alert alert-secondary mb-0">
         Hmmm... it looks like the list of targets is empty.
@@ -112,7 +113,19 @@ export default {
       loading: false,
       email: "",
       targets: [],
+      query: "",
     };
+  },
+  computed: {
+    filteredTargets() {
+      if (this.query.length > 0) {
+        return this.targets.filter((search) =>
+          search.title.toLowerCase().includes(this.query.toLowerCase())
+        );
+      }
+
+      return this.targets;
+    },
   },
   methods: {
     async loadTargets() {
@@ -137,6 +150,7 @@ export default {
   async created() {
     const user = await Auth.currentAuthenticatedUser();
     this.email = user.attributes.email;
+
     this.loadTargets();
   },
   watch: {
