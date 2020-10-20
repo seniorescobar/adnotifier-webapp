@@ -146,16 +146,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-notifications {
-  font-size: 1.25rem;
-  height: 45px;
-  width: 45px;
-
-  > svg {
-    flex: 1;
-  }
-}
-
 .target-add {
   border-style: dashed !important;
   font-size: 2.25rem;

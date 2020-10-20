@@ -19,7 +19,7 @@
       <div class="col">
         <a
           :href="target.url"
-          class="btn btn-block btn-sm btn-secondary"
+          class="btn btn-block btn-secondary"
           target="_blank"
         >
           Open link in new tab

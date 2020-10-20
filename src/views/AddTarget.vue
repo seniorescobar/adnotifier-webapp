@@ -22,7 +22,7 @@
         <textarea
           cols="30"
           rows="10"
-          placeholder="Link"
+          placeholder="URL"
           class="border-primary border-width-3 w-100 p-2"
           required
           ref="url"
