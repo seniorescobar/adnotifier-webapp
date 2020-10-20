@@ -32,10 +32,22 @@
               <div class="row mb-2">
                 <div class="col">
                   <button
+                    v-if="signingIn"
+                    class="btn btn-block btn-lg btn-primary"
+                    disabled
+                  >
+                    <span
+                      class="spinner-border"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                  <button
+                    v-else
                     type="submit"
                     class="btn btn-block btn-lg btn-primary"
                   >
-                    {{ signingIn ? "Signing in..." : "Sign in" }}
+                    Sign in
                   </button>
                 </div>
               </div>
@@ -63,11 +75,11 @@
 <script>
 import { Auth } from "aws-amplify";
 
-import CompleteSignin from './CompleteSignin.vue'
+import CompleteSignin from "./CompleteSignin.vue";
 
 export default {
   components: {
-    CompleteSignin
+    CompleteSignin,
   },
   data() {
     return {
