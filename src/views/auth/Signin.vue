@@ -67,7 +67,7 @@
           </div>
         </div>
       </template>
-      <complete-signin v-if="showCompleteSignin" :user="user"></complete-signin>
+      <complete-signin v-else :user="user"></complete-signin>
     </div>
   </div>
 </template>
