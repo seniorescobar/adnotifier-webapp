@@ -116,3 +116,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.spinner-border {
+  height: 24px;
+  width: 24px;
+}
+</style>
