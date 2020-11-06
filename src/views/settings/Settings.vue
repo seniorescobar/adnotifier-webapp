@@ -51,99 +51,62 @@
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
+import { ref, computed } from "vue";
+
+import {
+  fetchNotifications,
+  addNotification as apiAddNotification,
+  deleteNotification as apiDeleteNotification,
+} from "../../api/settings.js";
 
 import BackButton from "../../components/BackButton.vue";
-
-async function fetchNotifications(callback) {
-  const sess = await Auth.currentSession();
-  const token = sess.getIdToken().getJwtToken();
-
-  fetch(
-    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification",
-    {
-      headers: {
-        Authorization: token,
-      },
-    }
-  )
-    .then((resp) => resp.json())
-    .then(callback);
-}
 
 export default {
   components: {
     BackButton,
   },
-  data() {
-    return {
-      notifications: [],
-    };
-  },
-  computed: {
-    emails() {
-      return this.notifications.filter((n) => n.type === "email");
-    },
-  },
-  methods: {
-    async addNotification(type, event) {
-      const sess = await Auth.currentSession();
-      const token = sess.getIdToken().getJwtToken();
+  setup() {
+    const loading = ref(true)
 
-      fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({
-            type: type,
-            options: { to: this.$refs.emailTo.value },
-          }),
-        }
-      )
-        .then((response) => response.json())
-        .then((newNotification) => {
-          this.notifications.push({
-            id: newNotification.notificationID,
-            type: newNotification.type,
-            options: JSON.parse(newNotification.options),
-          });
-
-          event.target.reset();
-        });
-    },
-    async deleteNotification(id) {
-      const sess = await Auth.currentSession();
-      const token = sess.getIdToken().getJwtToken();
-
-      fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification/" +
-          id,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then(() => {
-          this.notifications = this.notifications.filter(
-            (notification) => notification.id !== id
-          );
-        });
-    },
-  },
-  beforeRouteEnter(to, from, next) {
-    fetchNotifications((data) => {
-      next((vm) => {
-        vm.notifications = data;
-      });
+    const notifications = ref([]);
+    const emails = computed(() => {
+      return notifications.value.filter((n) => n.type === "email");
     });
+
+    const emailTo = ref("");
+
+    fetchNotifications().then((n) => {
+      loading.value = false
+      notifications.value = n
+    })
+
+    const addNotification = async (type, event) => {
+      let options = {};
+      switch (type) {
+        case "email":
+          options = { to: emailTo.value.value };
+          break;
+      }
+
+      const newNotification = await apiAddNotification(type, options);
+      notifications.value.push({
+        id: newNotification.notificationID,
+        type: newNotification.type,
+        options: JSON.parse(newNotification.options),
+      });
+
+      event.target.reset();
+    };
+
+    const deleteNotification = async (id) => {
+      await apiDeleteNotification(id);
+
+      notifications.value = notifications.value.filter(
+        (notification) => notification.id !== id
+      );
+    };
+
+    return { loading, emails, emailTo, addNotification, deleteNotification };
   },
 };
 </script>

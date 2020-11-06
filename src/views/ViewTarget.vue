@@ -37,7 +37,7 @@
 
 <script>
 import { ref } from "vue";
-import { fetchTarget, deleteTarget as apiDeleteTarget } from "../hooks/api.js";
+import { fetchTarget, deleteTarget as apiDeleteTarget } from "../api/target.js";
 import { useRoute, useRouter } from "vue-router";
 
 import BackButton from "../components/BackButton.vue";

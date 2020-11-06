@@ -89,7 +89,7 @@
 import { Auth } from "aws-amplify";
 import { ref, computed } from "vue";
 
-import { fetchTargets } from "../hooks/api.js";
+import { fetchTargets } from "../api/target.js";
 
 import TargetCard from "../components/target/TargetCard.vue";
 

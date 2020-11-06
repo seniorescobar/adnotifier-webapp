@@ -49,7 +49,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { addTarget as apiAddTarget } from "../hooks/api.js";
+import { addTarget as apiAddTarget } from "../api/target.js";
 
 import BackButton from "../components/BackButton.vue";
 
