@@ -28,7 +28,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-block btn-lg btn-danger" @click="delTarget" :disabled="loading">
+        <button class="btn btn-block btn-lg btn-danger" @click="deleteTarget" :disabled="loading">
           {{ target ? 'Delete' : '&nbsp;' }}
         </button>
       </div>
