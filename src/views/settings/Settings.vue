@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row d-block d-sm-none">
     <div class="col">
       <back-button name="targets" text="Targets"></back-button>
     </div>
@@ -66,7 +66,7 @@ export default {
     BackButton,
   },
   setup() {
-    const loading = ref(true)
+    const loading = ref(true);
 
     const notifications = ref([]);
     const emails = computed(() => {
@@ -76,9 +76,9 @@ export default {
     const emailTo = ref("");
 
     fetchNotifications().then((n) => {
-      loading.value = false
-      notifications.value = n
-    })
+      loading.value = false;
+      notifications.value = n;
+    });
 
     const addNotification = async (type, event) => {
       let options = {};

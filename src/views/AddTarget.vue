@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row d-block d-sm-none">
     <div class="col">
       <back-button name="targets" text="Targets"></back-button>
     </div>

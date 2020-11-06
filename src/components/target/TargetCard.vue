@@ -3,8 +3,7 @@
     <div class="col">
       <router-link
         :to="{ name: 'target', params: { id: target.id } }"
-        class="btn btn-block btn-lg text-left"
-        :class="{'btn-primary border-primary': target.enabled, 'btn-secondary border-secondary': !target.enabled}"
+        class="btn btn-primary btn-block btn-lg text-left"
       >
         <div class="row">
           <div class="col">
@@ -26,3 +25,7 @@ export default {
   props: ["target"],
 };
 </script>
+
+<style lang="scss" scoped>
+
+</style>

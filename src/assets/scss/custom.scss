@@ -1,6 +1,26 @@
-$primary: #1B1B1B;
-$warning: yellow;
-$info: blue;
+// https://colorpalettes.net/color-palette-4234/
+// $primary: #ac0e28;
+// $secondary: #013766;
+// $light: #010a1c;
+// $warning: #bc4558;
+
+// https://colorpalettes.net/color-palette-4193/
+$primary: #2a5d68;
+$secondary: #7dbbb9;
+$warning: #c5d7d9;
+$light: #d8d3d0;
+
+// https://colorpalettes.net/color-palette-4194/
+// $primary: #bbbbbe;
+// $secondary: #495464;
+// $warning: #f4f4f2;
+// $light: #bbbfca;
+
+// https://colorpalettes.net/color-palette-3693/
+// $primary: #63a583;
+// $secondary: #6e93d6;
+// $warning: #e4dbd9;
+// $light: #6e93d6;
 
 $input-focus-box-shadow: none;
 $input-btn-focus-box-shadow: none;
@@ -8,5 +28,5 @@ $input-btn-focus-box-shadow: none;
 @import 'node_modules/bootstrap/scss/bootstrap';
 
 .border-width-3 {
-  border-width: 3px !important;
+  border-width: 2px !important;
 }
