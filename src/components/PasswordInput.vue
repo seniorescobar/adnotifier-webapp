@@ -22,12 +22,15 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
-    props: ['placeholder'],
-    data() {
-        return {
-            showPassword: false,
-        }
-    }
-}
+  props: ["placeholder"],
+  setup() {
+    const password = ref("");
+    const showPassword = ref(false);
+
+    return { password, showPassword };
+  },
+};
 </script>

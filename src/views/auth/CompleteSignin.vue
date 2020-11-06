@@ -43,8 +43,10 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+import { addNotification } from '../../api/settings.js'
 import { Auth } from "aws-amplify";
-
 import PasswordInput from "../../components/PasswordInput.vue";
 
 export default {
@@ -52,41 +54,30 @@ export default {
   components: {
     PasswordInput,
   },
-  data() {
-    return {
-      completingSignin: false,
-    };
-  },
-  methods: {
-    async completeSignin() {
-      this.completingSignin = true;
+  setup(props) {
+    const router = useRouter()
 
-      const newPassword = this.$refs.newPassword.$refs.password.value;
-      const user = await Auth.completeNewPassword(this.user, newPassword);
+    const newPassword = ref('')
 
-      const token = user.getSignInUserSession().getIdToken().getJwtToken();
+    const completingSignin = ref(false);
+    const completeSignin = async () => {
+      completingSignin.value = true;
 
-      await fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/notification",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({
-            type: "email",
-            options: { to: user.challengeParam.userAttributes.email },
-          }),
-        }
-      );
+      const user = await Auth.completeNewPassword(props.user, newPassword.value.password.value);
+      await addNotification('email', { to: user.challengeParam.userAttributes.email }) 
 
-      this.$router.replace({
+      router.replace({
         name: "targets",
       });
 
-      this.completingSignin = false;
-    },
+      completingSignin.value = false;
+    };
+
+    return {
+      newPassword,
+      completeSignin,
+      completingSignin,
+    };
   },
 };
 </script>

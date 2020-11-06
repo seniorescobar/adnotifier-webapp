@@ -1,15 +1,19 @@
 <template>
-    <p>Signing out...</p>
+  <p>Signing out...</p>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import { Auth } from "aws-amplify";
 
 export default {
-  async created() {
-    await Auth.signOut();
-    this.$router.push({
-      name: "signin",
+  setup() {
+    const router = useRouter();
+
+    Auth.signOut().then(() => {
+      router.push({
+        name: "signin",
+      });
     });
   },
 };
