@@ -37,7 +37,7 @@
 
 <script>
 import { ref } from "vue";
-import { fetchTarget, deleteTarget } from "../hooks/api.js";
+import { fetchTarget, deleteTarget as apiDeleteTarget } from "../hooks/api.js";
 import { useRoute, useRouter } from "vue-router";
 
 import BackButton from "../components/BackButton.vue";
@@ -59,15 +59,15 @@ export default {
       loading.value = false
     });
 
-    const delTarget = async () => {
-      await deleteTarget(id);
+    const deleteTarget = async () => {
+      await apiDeleteTarget(id);
       router.push({ name: "targets" });
     };
 
     return {
       loading,
       target,
-      delTarget,
+      deleteTarget,
     };
   },
 };

@@ -37,17 +37,19 @@
       </div>
     </div>
   </form>
-  <div class="row" v-if="error">
+  <div class="row" v-if="err">
     <div class="col">
       <div class="alert alert-danger" role="alert">
-        {{ error }}
+        {{ err }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { addTarget as apiAddTarget } from "../hooks/api.js";
 
 import BackButton from "../components/BackButton.vue";
 
@@ -55,60 +57,37 @@ export default {
   components: {
     BackButton,
   },
-  data() {
-    return {
-      adding: false,
-      error: null,
-    };
-  },
-  methods: {
-    async addTarget() {
-      this.adding = true;
+  setup() {
+    const router = useRouter();
 
-      const sess = await Auth.currentSession();
-      const token = sess.getIdToken().getJwtToken();
+    const adding = ref(false);
+    const title = ref("");
+    const url = ref("");
 
-      fetch(
-        "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({
-            title: this.$refs.title.value,
-            url: this.$refs.url.value,
-            enabled: true,
-          }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            var err = new Error();
-            err.response = response;
-            throw err;
-          }
+    const err = ref(null);
 
-          return response.json();
-        })
+    const addTarget = async () => {
+      adding.value = true;
+
+      apiAddTarget(title.value.value, url.value.value)
         .then((newTarget) => {
-          this.$router.push({
+          adding.value = false;
+
+          router.push({
             name: "target",
             params: { id: newTarget.targetID },
           });
         })
         .catch((error) => {
-          this.adding = false;
+          adding.value = false;
 
-          error.response.json().then((error) => {
-            this.error = error.text;
+          error.response.json().then((e) => {
+            err.value = e.text;
           });
         });
-    },
+    };
+
+    return { adding, title, url, addTarget, err };
   },
 };
 </script>
-
-<style lang="scss">
-</style>
