@@ -34,7 +34,7 @@
     <div class="col">
       <button
         class="btn btn-block btn-lg btn-danger"
-        @click="delTarget"
+        @click="deleteTarget"
         :disabled="loading"
       >
         {{ target ? "Delete" : "&nbsp;" }}
