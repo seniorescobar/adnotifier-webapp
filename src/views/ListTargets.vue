@@ -87,56 +87,33 @@
 
 <script>
 import { Auth } from "aws-amplify";
+import { ref, computed } from "vue";
+
+import { fetchTargets } from "../hooks/api.js";
 
 import TargetCard from "../components/target/TargetCard.vue";
-
-async function fetchTargets() {
-  const sess = await Auth.currentSession();
-  const token = sess.getIdToken().getJwtToken();
-
-  return fetch(
-    "https://rftdwuwyj4.execute-api.eu-central-1.amazonaws.com/dev/target",
-    {
-      headers: {
-        Authorization: token,
-      },
-    }
-  ).then((r) => r.json());
-}
 
 export default {
   components: {
     TargetCard,
   },
-  data() {
-    return {
-      loading: false,
-      email: "",
-      targets: [],
-      query: "",
-    };
-  },
-  computed: {
-    filteredTargets() {
-      if (this.query.length > 0) {
-        return this.targets.filter((search) =>
-          search.title.toLowerCase().includes(this.query.toLowerCase())
+  setup() {
+    const loading = ref(true);
+    const email = ref("");
+    const query = ref("");
+    const targets = ref([]);
+
+    const filteredTargets = computed(() => {
+      if (query.value.length > 0) {
+        return targets.value.filter((search) =>
+          search.title.toLowerCase().includes(query.value.toLowerCase())
         );
       }
 
-      return this.targets;
-    },
-  },
-  methods: {
-    async loadTargets() {
-      this.loading = true;
+      return targets.value;
+    });
 
-      const targets = await fetchTargets();
-      this.targets = this.sortByTimestamp(targets);
-
-      this.loading = false;
-    },
-    sortByTimestamp(data) {
+    const sortByTimestamp = (data) => {
       return data.sort((a, b) => {
         if (a.timestamp > b.timestamp) {
           return -1;
@@ -145,16 +122,18 @@ export default {
         }
         return 0;
       });
-    },
-  },
-  async created() {
-    const user = await Auth.currentAuthenticatedUser();
-    this.email = user.attributes.email;
+    };
 
-    this.loadTargets();
-  },
-  watch: {
-    $route: "loadTargets",
+    Auth.currentAuthenticatedUser().then((user) => {
+      email.value = user.attributes.email;
+    });
+
+    fetchTargets().then((t) => {
+      targets.value = sortByTimestamp(t)
+      loading.value = false
+    })
+
+    return { loading, email, query, filteredTargets };
   },
 };
 </script>
