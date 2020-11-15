@@ -5,16 +5,16 @@
 // $warning: #bc4558;
 
 // https://colorpalettes.net/color-palette-4193/
-$primary: #2a5d68;
-$secondary: #7dbbb9;
-$warning: #c5d7d9;
-$light: #d8d3d0;
+// $primary: #2a5d68;
+// $secondary: #7dbbb9;
+// $warning: #c5d7d9;
+// $light: #d8d3d0;
 
 // https://colorpalettes.net/color-palette-4194/
-// $primary: #bbbbbe;
-// $secondary: #495464;
-// $warning: #f4f4f2;
-// $light: #bbbfca;
+$primary: #495464;
+$secondary: #bbbbbe;
+$warning: #f4f4f2;
+$light: #bbbfca;
 
 // https://colorpalettes.net/color-palette-3693/
 // $primary: #63a583;
@@ -24,6 +24,7 @@ $light: #d8d3d0;
 
 $input-focus-box-shadow: none;
 $input-btn-focus-box-shadow: none;
+$link-hover-decoration: none;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
 
