@@ -13,7 +13,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-1",
     "aws-amplify": "^3.3.4",
-    "aws-amplify-vue": "^2.1.2",
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
