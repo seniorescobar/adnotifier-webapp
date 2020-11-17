@@ -44,11 +44,8 @@
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
 import { ref, computed } from "vue";
-
 import { fetchTargets } from "../api/target.js";
-
 import TargetCard from "../components/target/TargetCard.vue";
 
 export default {
@@ -57,7 +54,6 @@ export default {
   },
   setup() {
     const loading = ref(true);
-    const email = ref("");
     const query = ref("");
     const targets = ref([]);
 
@@ -82,16 +78,12 @@ export default {
       });
     };
 
-    Auth.currentAuthenticatedUser().then((user) => {
-      email.value = user.attributes.email;
-    });
-
     fetchTargets().then((t) => {
       targets.value = sortByTimestamp(t);
       loading.value = false;
     });
 
-    return { loading, email, query, filteredTargets };
+    return { loading, query, filteredTargets };
   },
 };
 </script>
