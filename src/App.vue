@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import { useStore } from 'vuex'
-
 import Navigation from './components/Navigation.vue'
 
 export default {
@@ -19,10 +17,6 @@ export default {
     Navigation,
   },
   setup() {
-    const store = useStore()
-
-    console.log(store.getters.authState)
-
     return {
       email: 'flyingspurs90@protonmail.com',
       loading: false,
