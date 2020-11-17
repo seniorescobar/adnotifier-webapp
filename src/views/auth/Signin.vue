@@ -73,10 +73,9 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router';
-
-import { Auth } from "aws-amplify";
+import { ref } from "vue";
+// import { useRouter } from 'vue-router';
+import { useStore } from "vuex";
 
 import CompleteSignin from "./CompleteSignin.vue";
 
@@ -85,37 +84,29 @@ export default {
     CompleteSignin,
   },
   setup() {
-    const router = useRouter()
+    // const router = useRouter()
+    const store = useStore();
 
-    const signingIn = ref(false)
+    const signingIn = ref(false);
     const showCompleteSignin = ref(false);
 
-    const email= ref('')
-    const password = ref('')
+    const email = ref("");
+    const password = ref("");
 
-    const err = ref(false)
+    const err = ref(false);
 
-    const user = ref(null)
+    const user = ref(null);
     const signIn = async () => {
       signingIn.value = true;
 
-      try {
-        const u = await Auth.signIn(email.value.value, password.value.value);
-        if (u.challengeName === "NEW_PASSWORD_REQUIRED") {
-          user.value = u;
-          showCompleteSignin.value = true;
+      // sign in
+      store.dispatch('signIn', {
+        email: email.value.value,
+        password: password.value.value,
+      })
 
-          return;
-        }
-
-        router.replace({
-          name: "targets",
-        });
-      } catch (e) {
-        signingIn.value = false;
-        err.value = true;
-      }
-    }
+      signingIn.value = false;
+    };
 
     return {
       email,

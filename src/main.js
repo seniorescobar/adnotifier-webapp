@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 import router from './router.js'
+import store from './store/index.js'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faPlusCircle, faArrowLeft, faMinusCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +13,7 @@ library.add(faSearch, faPlusCircle, faMinusCircle, faArrowLeft, faEye, faEyeSlas
 import 'bootstrap'
 import './assets/scss/custom.scss'
 
-import Amplify  from 'aws-amplify';
+import Amplify from 'aws-amplify';
 Amplify.configure({
     Auth: {
         region: 'eu-central-1',
@@ -24,6 +25,7 @@ Amplify.configure({
 const app = createApp(App)
 
 app.use(router)
+app.use(store)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 
