@@ -12,7 +12,10 @@ library.add(faSearch, faPlusCircle, faMinusCircle, faArrowLeft, faEye, faEyeSlas
 import 'bootstrap'
 import './assets/scss/custom.scss'
 
-import Amplify  from 'aws-amplify';
+import { applyPolyfills, defineCustomElements } from '@aws-amplify/ui-components/loader';
+applyPolyfills().then(() => {  defineCustomElements(window); });
+
+import Amplify  from '@aws-amplify/core';
 Amplify.configure({
     Auth: {
         region: 'eu-central-1',
@@ -22,6 +25,8 @@ Amplify.configure({
 });
 
 const app = createApp(App)
+
+app.config.isCustomElement = (tag) => tag.startsWith('amplify-');
 
 app.use(router)
 
